@@ -1,0 +1,91 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-parent</artifactId>
+        <version>6-beta-1</version>
+    </parent>
+
+    <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
+    <artifactId>cdi-tck-parent</artifactId>
+    <version>1.0.0.Alpha1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <description>Parent for the CDI tck runner in AS7</description>
+
+    <name>Weld TCK Tunner</name>
+    <url>https://github.com/jbossas/weld-as7-tck-runner</url>
+
+    <developers>
+        <developer>
+            <name>Stuart Douglas</name>
+            <email>sdouglas@redhat.com</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.org.jboss.weld.weld-core-bom>1.1.1.Final</version.org.jboss.weld.weld-core-bom>
+        <harness.version>1.1.0-CR9</harness.version>
+        <shrinkwrap.version>1.0.0-alpha-11</shrinkwrap.version>
+        <arquillian.version>1.0.0.Alpha4</arquillian.version>
+    </properties>
+
+    <modules>
+        <module>container</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.weld</groupId>
+                <artifactId>weld-core-bom</artifactId>
+                <version>${version.org.jboss.weld.weld-core-bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.test-harness</groupId>
+                <artifactId>jboss-test-harness-api</artifactId>
+                <version>${harness.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.test-harness</groupId>
+                <artifactId>jboss-test-harness</artifactId>
+                <version>${harness.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.shrinkwrap</groupId>
+                <artifactId>shrinkwrap-impl-base</artifactId>
+                <version>${shrinkwrap.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-spi</artifactId>
+                <version>${arquillian.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-impl-base</artifactId>
+                <version>${arquillian.version}</version>
+            </dependency>
+
+        </dependencies>
+
+
+    </dependencyManagement>
+
+
+    <scm>
+        <connection>scm:git:git://github.com/jbossas/weld-as7-tck-runner.git</connection>
+        <developerConnection>scm:git:git@github.com:jbossas/weld-as7-tck-runner.git</developerConnection>
+        <url>scm:git:git://github.com/jbossas/weld-as7-tck-runner.git</url>
+    </scm>
+
+</project>
