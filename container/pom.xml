@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
+        <artifactId>cdi-tck-parent</artifactId>
+        <version>1.0.0.Alpha1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
+    <artifactId>jbossas-container</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.0.Alpha1-SNAPSHOT</version>
+    <name>JBossas7 Test Harness Container</name>
+    <url>http://www.jboss.org</url>
+    <description>The Jboss Test Harness Container for AS7</description>
+
+    <licenses>
+        <license>
+            <name>lgpl</name>
+            <url>http://repository.jboss.org/licenses/lgpl.txt</url>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>JBoss, A division of Red Hat, Inc</name>
+        <url>http://www.jboss.org</url>
+    </organization>
+
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+        <finalName>${artifactId}</finalName>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
+        <plugins>
+
+            <!-- define how we want compilation to take place
+    here, we accept most of the defaults but say that we want the
+    optimization flag set, and define the source and target to be 1.5,
+    these setting will be inherited by child projects -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <debug>true</debug>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Repository Group</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.test-harness</groupId>
+            <artifactId>jboss-test-harness-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.test-harness</groupId>
+            <artifactId>jboss-test-harness</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.shrinkwrap</groupId>
+            <artifactId>shrinkwrap-impl-base</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian</groupId>
+            <artifactId>arquillian-spi</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian</groupId>
+            <artifactId>arquillian-impl-base</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>
+
