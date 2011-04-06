@@ -35,7 +35,9 @@ import java.io.IOException;
  *
  * @author Stuart Douglas
  */
-public class DatasourceManager {
+public class DataSourceManager {
+
+    private final static String JNDI_NAME = "java:/DefaultDS";
 
     @BeforeSuite
     public void beforeSuite() throws IOException {
@@ -49,12 +51,31 @@ public class DatasourceManager {
         ModelNode r = client.execute(OperationBuilder.Factory.create(request).build());
         boolean found = false;
         for(ModelNode dataSource : r.get("result").get("data-source").asList()) {
-            if(dataSource.asProperty().getName().equals("java:/DefaultDS")) {
+            if(dataSource.asProperty().getName().equals(JNDI_NAME)) {
                 found = true;
             }
         }
         if(!found) {
-            throw new RuntimeException("Datasource java:/DefaultDS was not found. This datasource must be defined, or the TCK will hang half way through due to missing MSC dependencies");
+            String create = System.getProperty("jboss.datasource.add");
+            if(create != null && !create.equals("false")) {
+                request = new ModelNode();
+                request.get("address").add("subsystem", "datasources");
+                request.get("address").add("data-source", "DefaultDS");
+                request.get("operation").set("add");
+                request.get("jndi-name").set(JNDI_NAME);
+                request.get("connection-url").set("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
+                request.get("driver-class").set("org.h2.Driver");
+                request.get("driver").set("org.h2.Driver#1.2");
+                request.get("security").get("user-name").set("sa");
+                request.get("security").get("user-name").set("password");
+                request.get("pool-name").set("DefaultDS");
+                ModelNode result = client.execute(OperationBuilder.Factory.create(request).build());
+                if(!result.get("outcome").asString().equals("success")) {
+                    throw new RuntimeException("DataSource java:/DefaultDS was not found and could not be created automatically: " + result);
+                }
+            } else {
+                throw new RuntimeException("DataSource java:/DefaultDS was not found. This DataSource must be defined, or the TCK will hang half way through due to missing MSC dependencies. To create this DataSource automatically run the TCK with -Djboss.datasource.add=true");
+            }
         }
     }
 

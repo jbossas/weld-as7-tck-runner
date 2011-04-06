@@ -18,7 +18,7 @@
       <classes>
 
          <!-- Ensure that the DefaultDS has been set up -->
-         <class name="org.jboss.weld.tck.jbossas.DatasourceManager" />
+         <class name="org.jboss.weld.tck.jbossas.DataSourceManager" />
 
          <!-- Issues in the TCK -->
 

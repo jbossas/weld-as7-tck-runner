@@ -155,6 +155,7 @@
                     <forkMode>once</forkMode>
                     <systemPropertyVariables>
                         <jboss.home>${jboss.home}</jboss.home>
+                        <jboss.datasource.add>${jboss.datasource.add}</jboss.datasource.add>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

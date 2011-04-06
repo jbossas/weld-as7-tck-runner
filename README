@@ -1,0 +1,18 @@
+
+	Jboss AS7 CDI TCK Runner
+
+This project allows you to run the CDI TCK against Jboss AS7.
+
+Instructions
+-----------------
+
+Make sure JBOSS_HOME is pointing to your Jboss AS7 installation. 
+
+Then run 
+
+mvn install -Djboss.datasource.add=true 
+
+The TCK requires the datasource java:/DefaultDS to be present, or it will
+hang due to missing dependencies. The -Djboss.datasource.add=true will
+automatically add this datasource if it does not already exist. 
+
