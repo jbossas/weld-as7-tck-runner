@@ -22,14 +22,11 @@ import org.jboss.testharness.api.DeploymentExceptionTransformer;
 
 /**
  * An implementation which can transform deployment exceptions from JBoss AS
- * 
  */
-public class WeldProfileServiceDeploymentExceptionTransformer implements DeploymentExceptionTransformer
-{
+public class WeldProfileServiceDeploymentExceptionTransformer implements DeploymentExceptionTransformer {
 
-   public DeploymentException transform(DeploymentException exception)
-   {
-      return exception;
-   }
+    public DeploymentException transform(DeploymentException exception) {
+        return exception;
+    }
 
 }

@@ -9,22 +9,27 @@
             <selector-class name="org.jboss.testharness.impl.testng.DisableIntegrationTestsMethodSelector" />
          </method-selector>
       </method-selectors>
+
       <packages>
+
          <package name="org.jboss.jsr299.tck.tests.*" />
          <package name="org.jboss.jsr299.tck.interceptors.tests.*" />
       </packages>
       <classes>
-      
+
+         <!-- Ensure that the DefaultDS has been set up -->
+         <class name="org.jboss.weld.tck.jbossas.DatasourceManager" />
+
          <!-- Issues in the TCK -->
-         
+
          <!-- Issues in Weld (the RI) -->
 
          <!-- Issues in JBoss AS -->
-         
-         
+
+
          <!-- Requires EJB 3.1 -->
          <!-- TODO Check these -->
-         
+
          <!-- JBAS-8306 -->
          <class name="org.jboss.jsr299.tck.tests.context.request.ejb.EJBRequestContextTest">
             <methods>
@@ -35,5 +40,5 @@
 
       </classes>
    </test>
-   
+
 </suite>

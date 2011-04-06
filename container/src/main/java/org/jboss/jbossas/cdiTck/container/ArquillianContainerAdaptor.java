@@ -32,122 +32,96 @@ import java.util.zip.ZipInputStream;
  *
  * @author Stuart Douglas
  */
-public class ArquillianContainerAdaptor implements Containers
-{
-   private DeployableContainer container;
-   private SuiteContext suiteContext;
-   private ClassContext context;
-   private Configuration configuration;
-   private Archive<?> swArchive;
-   private org.jboss.arquillian.spi.DeploymentException exception;
+public class ArquillianContainerAdaptor implements Containers {
+    private DeployableContainer container;
+    private SuiteContext suiteContext;
+    private ClassContext context;
+    private Configuration configuration;
+    private Archive<?> swArchive;
+    private org.jboss.arquillian.spi.DeploymentException exception;
 
-   public void setup() throws IOException
-   {
-      container = loadDeployableContainer();
-      suiteContext = new SuiteContext(new DynamicServiceLoader());
-      XmlConfigurationBuilder builder = new XmlConfigurationBuilder();
-      configuration = builder.build();
-      container.setup(suiteContext, configuration);
-      try
-      {
-         container.start(suiteContext);
-      }
-      catch (LifecycleException e)
-      {
-         throw new RuntimeException(e);
-      }
-   }
-
-   public void cleanup() throws IOException
-   {
-      try
-      {
-         container.stop(suiteContext);
-      }
-      catch (LifecycleException e)
-      {
-         throw new RuntimeException(e);
-      }
-   }
-
-   public boolean deploy(InputStream archive, String name) throws IOException
-   {
-      exception = null;
-      ClassContext context = new ClassContext(suiteContext);
-      context.add(Configuration.class,configuration);
-      if(name.endsWith("ear")) {
-         swArchive = ShrinkWrap.create(EnterpriseArchive.class, name);
-      } else if(name.endsWith("war")) {
-         swArchive = ShrinkWrap.create(WebArchive.class, name);
-      } else if(name.endsWith("jar")) {
-         swArchive = ShrinkWrap.create(JavaArchive.class, name);
-      } else {
-         throw new RuntimeException("Unkown archive extension: " + name);
-      }
-      swArchive.as(ZipImporter.class).importZip(new ZipInputStream(archive));
-      swArchive.add(new StringAsset(
-               "<jboss-deployment-structure><extended-class-visibility>true</extended-class-visibility></jboss-deployment-structure>"),
-                "META-INF/jboss-deployment-structure.xml");
-      try
-      {
-         container.deploy(context, this.swArchive);
-         return true;
-      }
-      catch (org.jboss.arquillian.spi.DeploymentException e)
-      {
-         exception = e;
-         return false;
-      }
-   }
-
-   public DeploymentException getDeploymentException()
-   {
-      return new DeploymentException(exception.getCause().getClass().getName(), exception.getCause());
-   }
-
-   public void undeploy(String name) throws IOException
-   {
-      try
-      {
-         container.undeploy(context, swArchive);
-      }
-      catch (org.jboss.arquillian.spi.DeploymentException e)
-      {
-         throw new RuntimeException(e);
-      }
-   }
-
-   private static final DeployableContainer loadDeployableContainer()
-   {
-      final String arquillianContainer = System.getProperty("org.jboss.har2arq.container");
-      if (arquillianContainer != null)
-      {
-         try
-         {
-            Class<?> clazz = Class.forName(arquillianContainer);
-            return (DeployableContainer) clazz.newInstance();
-         }
-         catch (Exception e)
-         {
+    public void setup() throws IOException {
+        container = loadDeployableContainer();
+        suiteContext = new SuiteContext(new DynamicServiceLoader());
+        XmlConfigurationBuilder builder = new XmlConfigurationBuilder();
+        configuration = builder.build();
+        container.setup(suiteContext, configuration);
+        try {
+            container.start(suiteContext);
+        } catch (LifecycleException e) {
             throw new RuntimeException(e);
-         }
-      }
+        }
+    }
 
-      // first we need to load the deployable containers
-      final ServiceLoader<DeployableContainer> container = ServiceLoader.load(DeployableContainer.class);
-      final Set<DeployableContainer> containers = new HashSet<DeployableContainer>();
-      for (DeployableContainer aContainer : container)
-      {
-         containers.add(aContainer);
-      }
-      if (containers.isEmpty())
-      {
-         throw new RuntimeException("No Arquillian DeployableContainer found on the class path.");
-      }
-      if (containers.size() > 1)
-      {
-         throw new RuntimeException("More than one DeployableContainer found on the class path. " + containers);
-      }
-      return containers.iterator().next();
-   }
+    public void cleanup() throws IOException {
+        try {
+            container.stop(suiteContext);
+        } catch (LifecycleException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deploy(InputStream archive, String name) throws IOException {
+        exception = null;
+        ClassContext context = new ClassContext(suiteContext);
+        context.add(Configuration.class, configuration);
+        if (name.endsWith("ear")) {
+            swArchive = ShrinkWrap.create(EnterpriseArchive.class, name);
+        } else if (name.endsWith("war")) {
+            swArchive = ShrinkWrap.create(WebArchive.class, name);
+        } else if (name.endsWith("jar")) {
+            swArchive = ShrinkWrap.create(JavaArchive.class, name);
+        } else {
+            throw new RuntimeException("Unkown archive extension: " + name);
+        }
+        swArchive.as(ZipImporter.class).importZip(new ZipInputStream(archive));
+        swArchive.add(new StringAsset(
+                "<jboss-deployment-structure><extended-class-visibility>true</extended-class-visibility></jboss-deployment-structure>"),
+                "META-INF/jboss-deployment-structure.xml");
+        try {
+            container.deploy(context, this.swArchive);
+            return true;
+        } catch (org.jboss.arquillian.spi.DeploymentException e) {
+            exception = e;
+            return false;
+        }
+    }
+
+    public DeploymentException getDeploymentException() {
+        return new DeploymentException(exception.getCause().getClass().getName(), exception.getCause());
+    }
+
+    public void undeploy(String name) throws IOException {
+        try {
+            container.undeploy(context, swArchive);
+        } catch (org.jboss.arquillian.spi.DeploymentException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static final DeployableContainer loadDeployableContainer() {
+        final String arquillianContainer = System.getProperty("org.jboss.har2arq.container");
+        if (arquillianContainer != null) {
+            try {
+                Class<?> clazz = Class.forName(arquillianContainer);
+                return (DeployableContainer) clazz.newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        // first we need to load the deployable containers
+        final ServiceLoader<DeployableContainer> container = ServiceLoader.load(DeployableContainer.class);
+        final Set<DeployableContainer> containers = new HashSet<DeployableContainer>();
+        for (DeployableContainer aContainer : container) {
+            containers.add(aContainer);
+        }
+        if (containers.isEmpty()) {
+            throw new RuntimeException("No Arquillian DeployableContainer found on the class path.");
+        }
+        if (containers.size() > 1) {
+            throw new RuntimeException("More than one DeployableContainer found on the class path. " + containers);
+        }
+        return containers.iterator().next();
+    }
 }
