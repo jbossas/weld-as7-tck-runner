@@ -34,7 +34,7 @@ import java.io.IOException;
  *
  * @author Stuart Douglas
  */
-public class DataSourceManager {
+public class DatasourceManager {
 
     private final static String JNDI_NAME = "java:/DefaultDS";
 

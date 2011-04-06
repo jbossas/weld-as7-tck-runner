@@ -56,6 +56,11 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>el-impl</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.jsr299.tck</groupId>
@@ -111,6 +116,20 @@
                             <stripVersion>true</stripVersion>
                             <overWriteReleases>true</overWriteReleases>
                             <outputDirectory>${project.build.directory}/dependency/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-el-dependencies</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                           <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                           <includeGroupIds>org.glassfish.web</includeGroupIds>
+                           <includeArtifactIds>el-impl</includeArtifactIds>
+                           <stripVersion>true</stripVersion>
+                           <overWriteReleases>true</overWriteReleases>
+                           <outputDirectory>${project.build.directory}/dependency/lib</outputDirectory>
                         </configuration>
                     </execution>
                     <execution>
