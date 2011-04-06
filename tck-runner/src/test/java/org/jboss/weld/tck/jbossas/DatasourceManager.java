@@ -69,7 +69,7 @@ public class DatasourceManager {
                 request.get("driver-class").set("org.h2.Driver");
                 request.get("driver").set("org.h2.Driver#1.2");
                 request.get("security").get("user-name").set("sa");
-                request.get("security").get("user-name").set("password");
+                request.get("security").get("password").set("sa");
                 request.get("pool-name").set("DefaultDS");
                 ModelNode result = client.execute(OperationBuilder.Factory.create(request).build());
                 if (!result.get("outcome").asString().equals("success")) {
