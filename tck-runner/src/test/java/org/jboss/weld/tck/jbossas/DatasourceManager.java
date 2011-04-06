@@ -32,7 +32,6 @@ import java.io.IOException;
  * Sanity saving measure that forces the TCK to fail early if java:/DefaultDS does not exist.
  * Otherwise the TCK will get 90% of the way through and then hang.
  *
- *
  * @author Stuart Douglas
  */
 public class DataSourceManager {
@@ -42,6 +41,9 @@ public class DataSourceManager {
     @BeforeSuite
     public void beforeSuite() throws IOException {
 
+        String test = System.getProperty(SingleTestMethodListener.TEST_CLASS_PROPERTY);
+
+
         ModelControllerClient client = ModelControllerClient.Factory.create("localhost", 9999);
         ModelNode request = new ModelNode();
         request.get("operation").set("read-resource");
@@ -50,14 +52,14 @@ public class DataSourceManager {
         request.get("recursive").set(false);
         ModelNode r = client.execute(OperationBuilder.Factory.create(request).build());
         boolean found = false;
-        for(ModelNode dataSource : r.get("result").get("data-source").asList()) {
-            if(dataSource.asProperty().getName().equals(JNDI_NAME)) {
+        for (ModelNode dataSource : r.get("result").get("data-source").asList()) {
+            if (dataSource.asProperty().getName().equals(JNDI_NAME)) {
                 found = true;
             }
         }
-        if(!found) {
+        if (!found) {
             String create = System.getProperty("jboss.datasource.add");
-            if(create != null && !create.equals("false")) {
+            if (create != null && !create.equals("false")) {
                 request = new ModelNode();
                 request.get("address").add("subsystem", "datasources");
                 request.get("address").add("data-source", "DefaultDS");
@@ -70,10 +72,14 @@ public class DataSourceManager {
                 request.get("security").get("user-name").set("password");
                 request.get("pool-name").set("DefaultDS");
                 ModelNode result = client.execute(OperationBuilder.Factory.create(request).build());
-                if(!result.get("outcome").asString().equals("success")) {
+                if (!result.get("outcome").asString().equals("success")) {
                     throw new RuntimeException("DataSource java:/DefaultDS was not found and could not be created automatically: " + result);
                 }
             } else {
+                if (test != null && !test.isEmpty()) {
+                    //we do not worry about this if we are only running one test
+                    return;
+                }
                 throw new RuntimeException("DataSource java:/DefaultDS was not found. This DataSource must be defined, or the TCK will hang half way through due to missing MSC dependencies. To create this DataSource automatically run the TCK with -Djboss.datasource.add=true");
             }
         }

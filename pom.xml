@@ -39,7 +39,7 @@
         <shrinkwrap.version>1.0.0-alpha-11</shrinkwrap.version>
         <arquillian.version>1.0.0.Alpha4</arquillian.version>
         <facelets.version>1.1.15</facelets.version>
-        <testng.version>5.10</testng.version>
+        <testng.version>5.14.2</testng.version>
         <jbossas.version>7.0.0.Beta3-SNAPSHOT</jbossas.version>
     </properties>
 
@@ -123,7 +123,6 @@
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
                 <version>${testng.version}</version>
-                <classifier>jdk15</classifier>
                 <exclusions>
                     <exclusion>
                         <groupId>junit</groupId>

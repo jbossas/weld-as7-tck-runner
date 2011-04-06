@@ -16,3 +16,9 @@ The TCK requires the datasource java:/DefaultDS to be present, or it will
 hang due to missing dependencies. The -Djboss.datasource.add=true will
 automatically add this datasource if it does not already exist. 
 
+Running a Single Test
+----------------
+
+Use the tckTest system property to specify the class name of the test to run like so:
+
+mvn test -DtckTest=TestToRun

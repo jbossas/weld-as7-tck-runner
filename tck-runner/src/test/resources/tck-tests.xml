@@ -3,6 +3,11 @@
 <!-- JSR-299 TCK TestNG configuration for Weld -->
 
 <suite name="Weld / JBoss AS run of CDI TCK" verbose="0"  >
+
+   <listeners>
+       <listener class-name="org.jboss.weld.tck.jbossas.SingleTestMethodListener" />
+   </listeners>
+
    <test name="CDI TCK">
       <method-selectors>
          <method-selector>
