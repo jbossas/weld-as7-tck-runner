@@ -14,6 +14,14 @@
     <packaging>pom</packaging>
     <description>Parent for the CDI tck runner in AS7</description>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <distribution>repo</distribution>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+        </license>
+    </licenses>
+
     <name>Weld TCK Tunner</name>
     <url>https://github.com/jbossas/weld-as7-tck-runner</url>
 
@@ -26,24 +34,63 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.org.jboss.weld.weld-core-bom>1.1.1.Final</version.org.jboss.weld.weld-core-bom>
+        <weld.version>1.1.1.Final</weld.version>
         <harness.version>1.1.0-CR9</harness.version>
         <shrinkwrap.version>1.0.0-alpha-11</shrinkwrap.version>
         <arquillian.version>1.0.0.Alpha4</arquillian.version>
+        <facelets.version>1.1.15</facelets.version>
+        <testng.version>5.10</testng.version>
+        <jbossas.version>7.0.0.Beta3-SNAPSHOT</jbossas.version>
     </properties>
 
     <modules>
         <module>container</module>
+        <module>tck-runner</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+
             <dependency>
-                <groupId>org.jboss.weld</groupId>
-                <artifactId>weld-core-bom</artifactId>
-                <version>${version.org.jboss.weld.weld-core-bom}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>com.sun.facelets</groupId>
+                <artifactId>jsf-facelets</artifactId>
+                <version>${facelets.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-spi</artifactId>
+                <version>${arquillian.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-impl-base</artifactId>
+                <version>${arquillian.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                <version>${jbossas.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-arquillian-container-remote</artifactId>
+                <version>${jbossas.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
+                <artifactId>jbossas-container</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.shrinkwrap</groupId>
+                <artifactId>shrinkwrap-impl-base</artifactId>
+                <version>${shrinkwrap.version}</version>
             </dependency>
 
             <dependency>
@@ -59,21 +106,30 @@
             </dependency>
 
             <dependency>
-                <groupId>org.jboss.shrinkwrap</groupId>
-                <artifactId>shrinkwrap-impl-base</artifactId>
-                <version>${shrinkwrap.version}</version>
+                <groupId>org.jboss.weld.arquillian.container</groupId>
+                <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
+                <version>${weld.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-spi</artifactId>
-                <version>${arquillian.version}</version>
+                <groupId>org.jboss.weld</groupId>
+                <artifactId>weld-core-bom</artifactId>
+                <version>${weld.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-impl-base</artifactId>
-                <version>${arquillian.version}</version>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+                <classifier>jdk15</classifier>
+                <exclusions>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
         </dependencies>

@@ -4,6 +4,7 @@
         <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
         <artifactId>cdi-tck-parent</artifactId>
         <version>1.0.0.Alpha1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
@@ -14,33 +15,8 @@
     <url>http://www.jboss.org</url>
     <description>The Jboss Test Harness Container for AS7</description>
 
-    <licenses>
-        <license>
-            <name>lgpl</name>
-            <url>http://repository.jboss.org/licenses/lgpl.txt</url>
-        </license>
-    </licenses>
-
-    <organization>
-        <name>JBoss, A division of Red Hat, Inc</name>
-        <url>http://www.jboss.org</url>
-    </organization>
-
     <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
-        <finalName>${artifactId}</finalName>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-        </testResources>
         <plugins>
-
-            <!-- define how we want compilation to take place
-    here, we accept most of the defaults but say that we want the
-    optimization flag set, and define the source and target to be 1.5,
-    these setting will be inherited by child projects -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
