@@ -37,8 +37,8 @@ public class SingleTestMethodListener implements IMethodInterceptor {
 
     public static final String TEST_CLASS_PROPERTY = "tckTest";
 
-    public List<IMethodInstance> intercept(List<IMethodInstance> methods, ITestContext context) {
 
+    public List<IMethodInstance> intercept(List<IMethodInstance> methods, ITestContext context) {
         String test = System.getProperty(TEST_CLASS_PROPERTY);
         if(test == null || test.isEmpty()) {
             return methods;
