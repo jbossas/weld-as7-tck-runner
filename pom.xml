@@ -40,7 +40,7 @@
         <arquillian.version>1.0.0.Alpha4</arquillian.version>
         <facelets.version>1.1.15</facelets.version>
         <testng.version>5.14.2</testng.version>
-        <jbossas.version>7.0.0.Beta3-SNAPSHOT</jbossas.version>
+        <jbossas.version>7.0.0.Beta3</jbossas.version>
         <glassfish.el.version>2.1.2-b04</glassfish.el.version>
     </properties>
 
