@@ -2,14 +2,14 @@
     <parent>
         <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
         <artifactId>cdi-tck-parent</artifactId>
-        <version>1.0.0.Alpha1</version>
+        <version>1.0.0.Alpha2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
     <artifactId>jbossas-container</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0.Alpha1</version>
+    <version>1.0.0.Alpha2-SNAPSHOT</version>
     <name>JBossas7 Test Harness Container</name>
     <url>http://www.jboss.org</url>
     <description>The Jboss Test Harness Container for AS7</description>
