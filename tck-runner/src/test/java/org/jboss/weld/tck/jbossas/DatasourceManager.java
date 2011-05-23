@@ -90,7 +90,7 @@ public class DatasourceManager implements ITestListener {
                     request.get("enabled").set("true");
                     request.get("connection-url").set("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
                     request.get("driver-class").set("org.h2.Driver");
-                    request.get("driver").set("org.h2.Driver#1.2");
+                    request.get("driver-name").set("h2");
                     request.get("security").get("user-name").set("sa");
                     request.get("security").get("password").set("sa");
                     request.get("pool-name").set("DefaultDS");
