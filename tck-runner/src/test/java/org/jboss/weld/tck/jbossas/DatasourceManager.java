@@ -84,7 +84,7 @@ public class DatasourceManager implements ITestListener {
                 if (create != null && !create.equals("false")) {
                     request = new ModelNode();
                     request.get("address").add("subsystem", "datasources");
-                    request.get("address").add("data-source", "DefaultDS");
+                    request.get("address").add("data-source", JNDI_NAME);
                     request.get("operation").set("add");
                     request.get("jndi-name").set(JNDI_NAME);
                     request.get("enabled").set("true");
