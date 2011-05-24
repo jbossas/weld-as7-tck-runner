@@ -26,7 +26,13 @@
          <!-- Ensure that the DefaultDS has been set up -->
 
          <!-- Issues in the TCK -->
-
+         <!-- CDITCK-212 -->
+         <class name="org.jboss.jsr299.tck.tests.context.DestroyedInstanceReturnedByGetTest">
+            <methods>
+               <exclude name="testDestroyedInstanceMustNotBeReturnedByGet" />
+            </methods>
+         </class>
+          
          <!-- Issues in Weld (the RI) -->
 
          <!-- Issues in JBoss AS -->
