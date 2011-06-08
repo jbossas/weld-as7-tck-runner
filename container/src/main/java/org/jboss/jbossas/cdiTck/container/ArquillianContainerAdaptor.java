@@ -75,9 +75,6 @@ public class ArquillianContainerAdaptor implements Containers {
             throw new RuntimeException("Unkown archive extension: " + name);
         }
         swArchive.as(ZipImporter.class).importZip(new ZipInputStream(archive));
-        swArchive.add(new StringAsset(
-                "<jboss-deployment-structure><extended-class-visibility>true</extended-class-visibility></jboss-deployment-structure>"),
-                "META-INF/jboss-deployment-structure.xml");
         try {
             container.deploy(context, this.swArchive);
             return true;
