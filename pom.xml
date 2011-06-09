@@ -35,8 +35,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <weld.version>1.1.1.Final</weld.version>
         <harness.version>1.1.0-CR9</harness.version>
-        <shrinkwrap.version>1.0.0-alpha-11</shrinkwrap.version>
-        <arquillian.version>1.0.0.Alpha4</arquillian.version>
+        <shrinkwrap.version>1.0.0-beta-2</shrinkwrap.version>
+        <arquillian.version>1.0.0.Beta2</arquillian.version>
         <facelets.version>1.1.15</facelets.version>
         <testng.version>5.14.2</testng.version>
         <jbossas.version>7.0.0.Beta4-SNAPSHOT</jbossas.version>
@@ -64,20 +64,32 @@
             </dependency>
 
             <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-spi</artifactId>
+                <groupId>org.jboss.arquillian.core</groupId>
+                <artifactId>arquillian-core-spi</artifactId>
                 <version>${arquillian.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-impl-base</artifactId>
+                <groupId>org.jboss.arquillian.container</groupId>
+                <artifactId>arquillian-container-spi</artifactId>
+                <version>${arquillian.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.arquillian.core</groupId>
+                <artifactId>arquillian-core-impl-base</artifactId>
                 <version>${arquillian.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.jboss.as</groupId>
                 <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                <version>${jbossas.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-arquillian-common</artifactId>
                 <version>${jbossas.version}</version>
             </dependency>
 

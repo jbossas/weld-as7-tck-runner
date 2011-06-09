@@ -1,16 +1,15 @@
 package org.jboss.jbossas.cdiTck.container;
 
 
-import org.jboss.arquillian.impl.DynamicServiceLoader;
-import org.jboss.arquillian.impl.XmlConfigurationBuilder;
-import org.jboss.arquillian.impl.context.ClassContext;
-import org.jboss.arquillian.impl.context.SuiteContext;
-import org.jboss.arquillian.spi.Configuration;
-import org.jboss.arquillian.spi.DeployableContainer;
-import org.jboss.arquillian.spi.LifecycleException;
+import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
+import org.jboss.arquillian.container.spi.client.container.LifecycleException;
+import org.jboss.arquillian.container.spi.context.ContainerContext;
+import org.jboss.arquillian.core.impl.loadable.LoadableExtensionLoader;
+import org.jboss.arquillian.core.spi.Manager;
+import org.jboss.arquillian.core.spi.ManagerBuilder;
+import org.jboss.as.arquillian.container.managed.ManagedContainerConfiguration;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -18,12 +17,12 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.testharness.api.DeploymentException;
 import org.jboss.testharness.spi.Containers;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.ServiceLoader;
 import java.util.Set;
-import java.util.zip.ZipInputStream;
 
 
 /**
@@ -33,21 +32,22 @@ import java.util.zip.ZipInputStream;
  * @author Stuart Douglas
  */
 public class ArquillianContainerAdaptor implements Containers {
-    private DeployableContainer container;
-    private SuiteContext suiteContext;
-    private ClassContext context;
-    private Configuration configuration;
+    private DeployableContainer<ManagedContainerConfiguration> deployableContainer;
+    private Container container;
+    private ManagedContainerConfiguration configuration;
     private Archive<?> swArchive;
-    private org.jboss.arquillian.spi.DeploymentException exception;
-
+    private org.jboss.arquillian.container.spi.client.container.DeploymentException exception;
+    private Manager manager;
     public void setup() throws IOException {
-        container = loadDeployableContainer();
-        suiteContext = new SuiteContext(new DynamicServiceLoader());
-        XmlConfigurationBuilder builder = new XmlConfigurationBuilder();
-        configuration = builder.build();
-        container.setup(suiteContext, configuration);
+        deployableContainer = loadDeployableContainer();
+        manager = (ManagerBuilder.from()).extension(LoadableExtensionLoader.class).create();
+        manager.getContext(ContainerContext.class).activate("AS7 Managegd");
+
+        configuration = new ManagedContainerConfiguration();
+        manager.inject(deployableContainer);
+        deployableContainer.setup(configuration);
         try {
-            container.start(suiteContext);
+            deployableContainer.start();
         } catch (LifecycleException e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +55,7 @@ public class ArquillianContainerAdaptor implements Containers {
 
     public void cleanup() throws IOException {
         try {
-            container.stop(suiteContext);
+            deployableContainer.stop();
         } catch (LifecycleException e) {
             throw new RuntimeException(e);
         }
@@ -63,8 +63,6 @@ public class ArquillianContainerAdaptor implements Containers {
 
     public boolean deploy(InputStream archive, String name) throws IOException {
         exception = null;
-        ClassContext context = new ClassContext(suiteContext);
-        context.add(Configuration.class, configuration);
         if (name.endsWith("ear")) {
             swArchive = ShrinkWrap.create(EnterpriseArchive.class, name);
         } else if (name.endsWith("war")) {
@@ -74,11 +72,11 @@ public class ArquillianContainerAdaptor implements Containers {
         } else {
             throw new RuntimeException("Unkown archive extension: " + name);
         }
-        swArchive.as(ZipImporter.class).importZip(new ZipInputStream(archive));
+        swArchive.as(ZipImporter.class).importFrom(archive);
         try {
-            container.deploy(context, this.swArchive);
+            deployableContainer.deploy(this.swArchive);
             return true;
-        } catch (org.jboss.arquillian.spi.DeploymentException e) {
+        } catch (org.jboss.arquillian.container.spi.client.container.DeploymentException e) {
             exception = e;
             return false;
         }
@@ -90,8 +88,8 @@ public class ArquillianContainerAdaptor implements Containers {
 
     public void undeploy(String name) throws IOException {
         try {
-            container.undeploy(context, swArchive);
-        } catch (org.jboss.arquillian.spi.DeploymentException e) {
+            deployableContainer.undeploy(swArchive);
+        } catch (org.jboss.arquillian.container.spi.client.container.DeploymentException e) {
             throw new RuntimeException(e);
         }
     }

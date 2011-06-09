@@ -32,7 +32,7 @@
                <exclude name="testDestroyedInstanceMustNotBeReturnedByGet" />
             </methods>
          </class>
-          
+
          <!-- Issues in Weld (the RI) -->
 
          <!-- Issues in JBoss AS -->
