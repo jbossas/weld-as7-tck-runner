@@ -72,7 +72,7 @@ public class DatasourceManager implements ITestListener {
             request.get("address").get("subsystem").set("datasources");
             // request.get("address").set("subsystem", "threads");
             request.get("recursive").set(false);
-            ModelNode r = client.execute(OperationBuilder.Factory.create(request).build());
+            ModelNode r = client.execute(new OperationBuilder(request).build());
             boolean found = false;
             for (ModelNode dataSource : r.get("result").get("data-source").asList()) {
                 if (dataSource.asProperty().getName().equals(JNDI_NAME)) {
@@ -94,7 +94,7 @@ public class DatasourceManager implements ITestListener {
                     request.get("security").get("user-name").set("sa");
                     request.get("security").get("password").set("sa");
                     request.get("pool-name").set("DefaultDS");
-                    ModelNode result = client.execute(OperationBuilder.Factory.create(request).build());
+                    ModelNode result = client.execute(new OperationBuilder(request).build());
                     if (!result.get("outcome").asString().equals("success")) {
                         throw new RuntimeException("DataSource java:/DefaultDS was not found and could not be created automatically: " + result);
                     }

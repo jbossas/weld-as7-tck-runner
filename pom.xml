@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -41,6 +42,9 @@
         <testng.version>5.14.2</testng.version>
         <jbossas.version>7.0.0.Beta4-SNAPSHOT</jbossas.version>
         <glassfish.el.version>2.1.2-b04</glassfish.el.version>
+        <!-- TODO: Remove this -->
+        <version.org.jboss.xnio.xnio-api>3.0.0.Beta2-20110615.041633-11</version.org.jboss.xnio.xnio-api>
+        <version.org.jboss.xnio.xnio-nio>3.0.0.Beta2-20110615.041656-11</version.org.jboss.xnio.xnio-nio>
     </properties>
 
     <modules>
@@ -100,6 +104,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-controller-client</artifactId>
+                <version>${jbossas.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
                 <artifactId>jbossas-container</artifactId>
                 <version>${project.version}</version>
@@ -138,6 +148,18 @@
             </dependency>
 
             <dependency>
+                <groupId>org.jboss.xnio</groupId>
+                <artifactId>xnio-api</artifactId>
+                <version>${version.org.jboss.xnio.xnio-api}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.xnio</groupId>
+                <artifactId>xnio-nio</artifactId>
+                <version>${version.org.jboss.xnio.xnio-nio}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
                 <version>${testng.version}</version>
@@ -162,12 +184,12 @@
     </scm>
 
     <profiles>
-      <profile>
-        <id>release</id>
-        <properties>
-          <maven.test.skip>true</maven.test.skip>
-        </properties>
-      </profile>
+        <profile>
+            <id>release</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
     </profiles>
 
 </project>
