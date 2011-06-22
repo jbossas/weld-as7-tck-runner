@@ -169,7 +169,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <argLine>-Xmx512m</argLine>
+                    <argLine>-Xmx1024m</argLine>
                     <forkMode>once</forkMode>
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/tck-tests.xml</suiteXmlFile>
@@ -222,6 +222,7 @@
                     <systemPropertyVariables>
                         <jboss.home>${jboss.home}</jboss.home>
                         <jboss.datasource.add>${jboss.datasource.add}</jboss.datasource.add>
+                        <tckTest>${tckTest}</tckTest>
                     </systemPropertyVariables>
                 </configuration>
 

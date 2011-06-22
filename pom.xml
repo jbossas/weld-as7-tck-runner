@@ -43,8 +43,8 @@
         <jbossas.version>7.0.0.Beta4-SNAPSHOT</jbossas.version>
         <glassfish.el.version>2.1.2-b04</glassfish.el.version>
         <!-- TODO: Remove this -->
-        <version.org.jboss.xnio.xnio-api>3.0.0.Beta2-20110615.041633-11</version.org.jboss.xnio.xnio-api>
-        <version.org.jboss.xnio.xnio-nio>3.0.0.Beta2-20110615.041656-11</version.org.jboss.xnio.xnio-nio>
+        <version.org.jboss.xnio.xnio-api>3.0.0.Beta2-20110621.215524-14</version.org.jboss.xnio.xnio-api>
+        <version.org.jboss.xnio.xnio-nio>3.0.0.Beta2-20110621.215553-14</version.org.jboss.xnio.xnio-nio>
     </properties>
 
     <modules>
