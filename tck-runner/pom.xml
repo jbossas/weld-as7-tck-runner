@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
         <artifactId>cdi-tck-parent</artifactId>
@@ -43,7 +44,6 @@
             <scope>test</scope>
         </dependency>
 
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -80,6 +80,10 @@
             <artifactId>jboss-as-controller-client</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-arquillian-container-managed</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -121,14 +125,14 @@
                         <id>copy-el-dependencies</id>
                         <phase>process-resources</phase>
                         <goals>
-                           <goal>copy-dependencies</goal>
+                            <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                           <includeGroupIds>org.glassfish.web</includeGroupIds>
-                           <includeArtifactIds>el-impl</includeArtifactIds>
-                           <stripVersion>true</stripVersion>
-                           <overWriteReleases>true</overWriteReleases>
-                           <outputDirectory>${project.build.directory}/dependency/lib</outputDirectory>
+                            <includeGroupIds>org.glassfish.web</includeGroupIds>
+                            <includeArtifactIds>el-impl</includeArtifactIds>
+                            <stripVersion>true</stripVersion>
+                            <overWriteReleases>true</overWriteReleases>
+                            <outputDirectory>${project.build.directory}/dependency/lib</outputDirectory>
                         </configuration>
                     </execution>
                     <execution>
@@ -164,19 +168,65 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.6</version>
                 <configuration>
+                    <argLine>-Xmx512m</argLine>
+                    <forkMode>once</forkMode>
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/tck-tests.xml</suiteXmlFile>
                     </suiteXmlFiles>
-                    <argLine>-Xmx512m</argLine>
-                    <forkMode>once</forkMode>
+                    <systemProperties>
+                        <property>
+                            <name>java.io.tmpdir</name>
+                            <value>${project.build.outputDirectory}</value>
+                        </property>
+                        <property>
+                            <name>org.jboss.testharness.standalone</name>
+                            <value>false</value>
+                        </property>
+                        <property>
+                            <name>org.jboss.testharness.container.extraConfigurationDir</name>
+                            <value>../jboss-as</value>
+                        </property>
+                        <property>
+                            <name>org.jboss.testharness.container.forceRestart</name>
+                            <value>true</value>
+                        </property>
+                        <property>
+                            <name>org.jboss.testharness.runIntegrationTests</name>
+                            <value>true</value>
+                        </property>
+                        <property>
+                            <name>org.jboss.testharness.libraryDirectory</name>
+                            <value>target/dependency/lib</value>
+                        </property>
+                        <property>
+                            <name>org.jboss.testharness.outputDirectory</name>
+                            <value>target</value>
+                        </property>
+                        <property>
+                            <name>org.jboss.testharness.spi.Containers</name>
+                            <value>org.jboss.jbossas.cdiTck.container.ArquillianContainerAdaptor</value>
+                        </property>
+                        <property>
+                            <name>org.jboss.har2arq.container</name>
+                            <value>org.jboss.as.arquillian.container.managed.ManagedDeployableContainer</value>
+                        </property>
+                        <property>
+                            <name>jboss.options</name>
+                            <value>-Xmx2048m -XX:MaxPermSize=512m -enableassertions
+                                -Dorg.jboss.testharness.api.ConfigurationBuilder=org.jboss.jsr299.tck.impl.JSR299PropertiesBasedConfigurationBuilder
+                            </value>
+                        </property>
+                    </systemProperties>
+
                     <systemPropertyVariables>
                         <jboss.home>${jboss.home}</jboss.home>
                         <jboss.datasource.add>${jboss.datasource.add}</jboss.datasource.add>
                     </systemPropertyVariables>
                 </configuration>
+
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -198,142 +248,5 @@
         </plugins>
     </build>
 
-    <profiles>
-
-        <profile>
-            <id>jbossas-managed</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-
-            <dependencies>
-                <dependency>
-                <groupId>org.jboss.as</groupId>
-                <artifactId>jboss-as-arquillian-container-managed</artifactId>
-            </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <suiteXmlFiles>
-                                <suiteXmlFile>src/test/resources/tck-tests.xml</suiteXmlFile>
-                            </suiteXmlFiles>
-                            <systemProperties>
-                                <property>
-                                    <name>java.io.tmpdir</name>
-                                    <value>${project.build.outputDirectory}</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.standalone</name>
-                                    <value>false</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.container.extraConfigurationDir</name>
-                                    <value>../jboss-as</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.container.forceRestart</name>
-                                    <value>true</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.runIntegrationTests</name>
-                                    <value>true</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.libraryDirectory</name>
-                                    <value>target/dependency/lib</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.outputDirectory</name>
-                                    <value>target</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.spi.Containers</name>
-                                    <value>org.jboss.jbossas.cdiTck.container.ArquillianContainerAdaptor</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.har2arq.container</name>
-                                    <value>org.jboss.as.arquillian.container.managed.ManagedDeployableContainer</value>
-                                </property>
-                                <property>
-                                    <name>jboss.options</name>
-                                    <value>-Xmx2048m -XX:MaxPermSize=512m -enableassertions -Dorg.jboss.testharness.api.ConfigurationBuilder=org.jboss.jsr299.tck.impl.JSR299PropertiesBasedConfigurationBuilder</value>
-                                </property>
-                            </systemProperties>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>remote</id>
-            <activation>
-                <property>
-                    <name>remote</name>
-                </property>
-            </activation>
-            <dependencies>
-                <dependency>
-                <groupId>org.jboss.as</groupId>
-                <artifactId>jboss-as-arquillian-container-managed</artifactId>
-            </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <suiteXmlFiles>
-                                <suiteXmlFile>src/test/resources/tck-tests.xml</suiteXmlFile>
-                            </suiteXmlFiles>
-                            <systemProperties>
-                                <property>
-                                    <name>java.io.tmpdir</name>
-                                    <value>${project.build.outputDirectory}</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.standalone</name>
-                                    <value>false</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.container.extraConfigurationDir</name>
-                                    <value>../jboss-as</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.container.forceRestart</name>
-                                    <value>true</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.runIntegrationTests</name>
-                                    <value>true</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.libraryDirectory</name>
-                                    <value>target/dependency/lib</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.outputDirectory</name>
-                                    <value>target</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.testharness.spi.Containers</name>
-                                    <value>org.jboss.jbossas.cdiTck.container.ArquillianContainerAdaptor</value>
-                                </property>
-                                <property>
-                                    <name>org.jboss.har2arq.container</name>
-                                    <value>org.jboss.as.arquillian.container.managed.ManagedDeployableContainer</value>
-                                </property>
-                            </systemProperties>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-    </profiles>
 
 </project>
