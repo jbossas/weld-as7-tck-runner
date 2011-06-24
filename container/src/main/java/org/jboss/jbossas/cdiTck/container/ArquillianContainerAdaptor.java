@@ -98,7 +98,7 @@ public class ArquillianContainerAdaptor implements Containers {
         final String arquillianContainer = System.getProperty("org.jboss.har2arq.container");
         if (arquillianContainer != null) {
             try {
-                Class<?> clazz = Class.forName(arquillianContainer);
+                Class<?> clazz = Class.forName(arquillianContainer.trim());
                 return (DeployableContainer) clazz.newInstance();
             } catch (Exception e) {
                 throw new RuntimeException(e);
