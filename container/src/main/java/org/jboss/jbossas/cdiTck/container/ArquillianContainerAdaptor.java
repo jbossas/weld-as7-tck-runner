@@ -41,9 +41,13 @@ public class ArquillianContainerAdaptor implements Containers {
     public void setup() throws IOException {
         deployableContainer = loadDeployableContainer();
         manager = (ManagerBuilder.from()).extension(LoadableExtensionLoader.class).create();
-        manager.getContext(ContainerContext.class).activate("AS7 Managegd");
+
+        manager.getContext(ContainerContext.class).activate("AS7 Managed");
 
         configuration = new ManagedContainerConfiguration();
+
+        configuration.setJavaVmArguments(System.getProperty("jboss.options"));
+
         manager.inject(deployableContainer);
         deployableContainer.setup(configuration);
         try {
