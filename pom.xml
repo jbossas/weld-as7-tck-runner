@@ -9,7 +9,7 @@
 
     <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
     <artifactId>cdi-tck-parent</artifactId>
-    <version>1.0.0.CR1</version>
+    <version>1.0.0.Final-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>Parent for the CDI tck runner in AS7</description>
 
