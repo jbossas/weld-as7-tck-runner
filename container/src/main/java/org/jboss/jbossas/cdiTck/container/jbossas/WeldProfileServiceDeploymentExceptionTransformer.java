@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.weld.tck.jbossas;
+package org.jboss.jbossas.cdiTck.container.jbossas;
 
 import org.jboss.testharness.api.DeploymentException;
 import org.jboss.testharness.api.DeploymentExceptionTransformer;

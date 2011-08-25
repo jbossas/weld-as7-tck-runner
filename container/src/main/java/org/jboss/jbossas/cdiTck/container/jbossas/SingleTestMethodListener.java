@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.jboss.weld.tck.jbossas;
+package org.jboss.jbossas.cdiTck.container.jbossas;
 
 import org.testng.IMethodInstance;
 import org.testng.IMethodInterceptor;

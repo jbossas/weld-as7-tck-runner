@@ -5,17 +5,17 @@
 <suite name="Weld / JBoss AS run of CDI TCK" verbose="0"  >
 
    <listeners>
-       <listener class-name="org.jboss.weld.tck.jbossas.SingleTestMethodListener" />
-       <listener class-name="org.jboss.weld.tck.jbossas.DatasourceManager" />
+       <listener class-name="org.jboss.jbossas.cdiTck.container.jbossas.SingleTestMethodListener" />
+       <listener class-name="org.jboss.jbossas.cdiTck.container.jbossas.DatasourceManager" />
    </listeners>
 
    <test name="CDI TCK">
-      <method-selectors>
+<!--      <method-selectors>
          <method-selector>
             <selector-class name="org.jboss.jsr299.tck.impl.WebProfileMethodSelector" />
          </method-selector>
       </method-selectors>
-
+-->
       <packages>
 
          <package name="org.jboss.jsr299.tck.tests.*" />
