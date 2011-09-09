@@ -36,10 +36,10 @@
         <weld.version>1.1.1.Final</weld.version>
         <harness.version>1.1.0-CR9</harness.version>
         <shrinkwrap.version>1.0.0-beta-2</shrinkwrap.version>
-        <arquillian.version>1.0.0.CR1</arquillian.version>
+        <arquillian.version>1.0.0.CR4</arquillian.version>
         <facelets.version>1.1.15</facelets.version>
         <testng.version>5.14.2</testng.version>
-        <jbossas.version>7.0.0.CR1</jbossas.version>
+        <jbossas.version>7.0.1.Final</jbossas.version>
         <glassfish.el.version>2.1.2-b04</glassfish.el.version>
     </properties>
 
