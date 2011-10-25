@@ -58,14 +58,6 @@
         <dependency>
             <groupId>org.jboss.jsr299.tck</groupId>
             <artifactId>jsr299-tck-impl</artifactId>
-            <type>xml</type>
-            <classifier>suite</classifier>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.jsr299.tck</groupId>
-            <artifactId>jsr299-tck-impl</artifactId>
             <scope>test</scope>
         </dependency>
 

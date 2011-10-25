@@ -41,6 +41,7 @@
         <testng.version>5.14.2</testng.version>
         <jbossas.version>7.0.2.Final</jbossas.version>
         <glassfish.el.version>2.1.2-b04</glassfish.el.version>
+        <cdi-tck.version>1.0.4.SP3</cdi-tck.version>
     </properties>
 
     <modules>
@@ -50,6 +51,16 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.jboss.jsr299.tck</groupId>
+                <artifactId>jsr299-tck-impl</artifactId>
+                <type>xml</type>
+                <classifier>suite</classifier>
+                <scope>test</scope>
+                <version>${cdi-tck.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>com.sun.facelets</groupId>
