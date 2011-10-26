@@ -55,12 +55,17 @@
             <dependency>
                 <groupId>org.jboss.jsr299.tck</groupId>
                 <artifactId>jsr299-tck-impl</artifactId>
+                <version>${cdi-tck.version}</version>
                 <type>xml</type>
                 <classifier>suite</classifier>
                 <scope>test</scope>
-                <version>${cdi-tck.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.jboss.jsr299.tck</groupId>
+                <artifactId>jsr299-tck-impl</artifactId>
+                <version>${cdi-tck.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.sun.facelets</groupId>
