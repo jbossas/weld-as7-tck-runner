@@ -98,6 +98,14 @@ public class DatasourceManager implements ITestListener {
                     if (!result.get("outcome").asString().equals("success")) {
                         throw new RuntimeException("DataSource java:/DefaultDS was not found and could not be created automatically: " + result);
                     }
+                    request = new ModelNode();
+                    request.get("address").add("subsystem", "datasources");
+                    request.get("address").add("data-source", JNDI_NAME);
+                    request.get("operation").set("enable");
+                    result = client.execute(new OperationBuilder(request).build());
+                    if (!result.get("outcome").asString().equals("success")) {
+                        throw new RuntimeException("DataSource java:/DefaultDS could not be enabled: " + result);
+                    }
                 } else {
                     if (test != null && !test.isEmpty()) {
                         //we do not worry about this if we are only running one test
