@@ -69,42 +69,32 @@ public class DatasourceManager implements ITestListener {
             ModelControllerClient client = ModelControllerClient.Factory.create("localhost", 9999);
             ModelNode request = new ModelNode();
             request.get("operation").set("read-resource");
-            request.get("address").get("subsystem").set("datasources");
+            request.get("address").get("subsystem").set("naming");
             // request.get("address").set("subsystem", "threads");
             request.get("recursive").set(false);
             ModelNode r = client.execute(new OperationBuilder(request).build());
             boolean found = false;
-            for (ModelNode dataSource : r.get("result").get("data-source").asList()) {
-                if (dataSource.asProperty().getName().equals(JNDI_NAME)) {
-                    found = true;
+
+            ModelNode resultNode = r.get("result");
+            if (resultNode.hasDefined("binding")) {
+                for (ModelNode dataSource : resultNode.get("binding").asList()) {
+                    if (dataSource.asProperty().getName().equals(JNDI_NAME)) {
+                        found = true;
+                    }
                 }
             }
             if (!found) {
                 String create = System.getProperty("jboss.datasource.add");
                 if (create != null && !create.equals("false")) {
                     request = new ModelNode();
-                    request.get("address").add("subsystem", "datasources");
-                    request.get("address").add("data-source", JNDI_NAME);
+                    request.get("address").add("subsystem", "naming");
+                    request.get("address").add("binding", JNDI_NAME);
                     request.get("operation").set("add");
-                    request.get("jndi-name").set(JNDI_NAME);
-                    request.get("enabled").set("true");
-                    request.get("connection-url").set("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
-                    request.get("driver-class").set("org.h2.Driver");
-                    request.get("driver-name").set("h2");
-                    request.get("security").get("user-name").set("sa");
-                    request.get("security").get("password").set("sa");
-                    request.get("pool-name").set("DefaultDS");
+                    request.get("lookup").set("java:jboss/datasources/ExampleDS");
+                    request.get("binding-type").set("lookup");
                     ModelNode result = client.execute(new OperationBuilder(request).build());
                     if (!result.get("outcome").asString().equals("success")) {
                         throw new RuntimeException("DataSource java:/DefaultDS was not found and could not be created automatically: " + result);
-                    }
-                    request = new ModelNode();
-                    request.get("address").add("subsystem", "datasources");
-                    request.get("address").add("data-source", JNDI_NAME);
-                    request.get("operation").set("enable");
-                    result = client.execute(new OperationBuilder(request).build());
-                    if (!result.get("outcome").asString().equals("success")) {
-                        throw new RuntimeException("DataSource java:/DefaultDS could not be enabled: " + result);
                     }
                 } else {
                     if (test != null && !test.isEmpty()) {
