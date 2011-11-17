@@ -6,7 +6,9 @@
 
    <listeners>
        <listener class-name="org.jboss.jbossas.cdiTck.container.jbossas.SingleTestMethodListener" />
+       <!--
        <listener class-name="org.jboss.jbossas.cdiTck.container.jbossas.DatasourceManager" />
+       -->
    </listeners>
 
    <test name="CDI TCK">
