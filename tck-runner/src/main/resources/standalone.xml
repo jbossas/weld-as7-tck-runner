@@ -215,7 +215,7 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:mail:1.0">
             <mail-session jndi-name="java:jboss/mail/Default">
-                <smtp-server address="localhost" port="25"/>
+                <smtp-server outbound-socket-binding-ref="mail-smtp"/>
             </mail-session>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:messaging:1.1">
@@ -435,11 +435,14 @@
         <socket-binding name="remoting" port="4447"/>
         <socket-binding name="txn-recovery-environment" port="4712"/>
         <socket-binding name="txn-status-manager" port="4713"/>
-        <outbound-socket-binding name="messaging-client">
-            <local-destination socket-binding-ref="messaging"/>
+        <outbound-socket-binding name="mail-smtp">
+            <remote-destination host="smtp.corp.redhat.com" port="25"/>
         </outbound-socket-binding>
-        <outbound-socket-binding name="messaging-throughput-client">
-            <local-destination socket-binding-ref="messaging-throughput"/>
+        <outbound-socket-binding name="mail-pop3">
+            <remote-destination host="mail.corp.redhat.com" port="1234"/>
+        </outbound-socket-binding>
+        <outbound-socket-binding name="mail-imap">
+            <remote-destination host="mail.corp.redhat.com" port="993"/>
         </outbound-socket-binding>
     </socket-binding-group>
 
