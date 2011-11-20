@@ -220,15 +220,15 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:messaging:1.1">
             <hornetq-server>
+                <!-- disable messaging persistence -->
+                <persistence-enabled>false</persistence-enabled>
                 <!-- Default journal file size is 10Mb, reduced here to 100k for faster first boot -->
                 <journal-file-size>102400</journal-file-size>
                 <journal-min-files>2</journal-min-files>
-                <!-- disable messaging persistence -->
-                <persistence-enabled>false</persistence-enabled>
 
                 <connectors>
-                    <netty-connector name="netty" socket-binding="messaging-client"/>
-                    <netty-connector name="netty-throughput" socket-binding="messaging-throughput-client">
+                    <netty-connector name="netty" socket-binding="messaging"/>
+                    <netty-connector name="netty-throughput" socket-binding="messaging-throughput">
                         <param key="batch-delay" value="50"/>
                     </netty-connector>
                     <in-vm-connector name="in-vm" server-id="0"/>
@@ -245,10 +245,10 @@
 
                 <security-settings>
                     <security-setting match="#">
+                        <permission type="send" roles="guest"/>
+                        <permission type="consume" roles="guest"/>
                         <permission type="createNonDurableQueue" roles="guest"/>
                         <permission type="deleteNonDurableQueue" roles="guest"/>
-                        <permission type="consume" roles="guest"/>
-                        <permission type="send" roles="guest"/>
                     </security-setting>
                 </security-settings>
 
@@ -264,7 +264,6 @@
                     </address-setting>
                 </address-settings>
 
-                <!--JMS Stuff-->
                 <jms-connection-factories>
                     <connection-factory name="InVmConnectionFactory">
                         <connectors>
