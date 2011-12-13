@@ -197,10 +197,6 @@
                             <name>jboss.options</name>
                             <value>-Xmx2048m -XX:MaxPermSize=512m -enableassertions  -Dorg.jboss.testharness.api.ConfigurationBuilder=org.jboss.jsr299.tck.impl.JSR299PropertiesBasedConfigurationBuilder</value>
                         </property>
-                        <property>
-                            <name>jboss.server.config.file.name</name>
-                            <value>${basedir}/target/classes/standalone.xml</value>
-                        </property>
                     </systemProperties>
 
                     <systemPropertyVariables>
