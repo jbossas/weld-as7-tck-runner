@@ -80,6 +80,13 @@
                 <groupId>org.jboss.arquillian.container</groupId>
                 <artifactId>arquillian-container-impl-base</artifactId>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-container-test-spi</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
