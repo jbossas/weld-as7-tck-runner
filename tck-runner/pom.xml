@@ -2,14 +2,14 @@
     <parent>
         <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
         <artifactId>cdi-tck-parent</artifactId>
-        <version> 1.0.0.CR2</version>
+        <version> 1.0.0.CR3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
     <artifactId>as7-cdi-tck-runner</artifactId>
-  <version>1.0.0.CR2</version>
+  <version>1.0.0.CR3-SNAPSHOT</version>
     <name>CDI TCK runner for Weld (JBoss AS7)</name>
     <description>Runs the CDI TCK on AS7</description>
 
