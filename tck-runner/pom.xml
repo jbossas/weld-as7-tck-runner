@@ -1,15 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
         <artifactId>cdi-tck-parent</artifactId>
-        <version> 1.0.0.CR3-SNAPSHOT</version>
+        <version>1.0.0.CR3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jboss.jbossas.as7-cdi-tck</groupId>
     <artifactId>as7-cdi-tck-runner</artifactId>
-  <version>1.0.0.CR3-SNAPSHOT</version>
+    <version>1.0.0.CR3-SNAPSHOT</version>
     <name>CDI TCK runner for Weld (JBoss AS7)</name>
     <description>Runs the CDI TCK on AS7</description>
 
@@ -78,8 +79,18 @@
         </dependency>
 
         <dependency>
-                <groupId>org.jboss.arquillian.container</groupId>
-                <artifactId>arquillian-container-impl-base</artifactId>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-container-test-impl-base</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.test</groupId>
+            <artifactId>arquillian-test-impl-base</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-container-impl-base</artifactId>
         </dependency>
 
 
@@ -203,7 +214,8 @@
                         </property>
                         <property>
                             <name>jboss.options</name>
-                            <value>-Xmx2048m -XX:MaxPermSize=512m -enableassertions  -Dorg.jboss.testharness.api.ConfigurationBuilder=org.jboss.jsr299.tck.impl.JSR299PropertiesBasedConfigurationBuilder</value>
+                            <value>-Xmx2048m -XX:MaxPermSize=512m -enableassertions -Dorg.jboss.testharness.api.ConfigurationBuilder=org.jboss.jsr299.tck.impl.JSR299PropertiesBasedConfigurationBuilder
+                            </value>
                         </property>
                     </systemProperties>
 
