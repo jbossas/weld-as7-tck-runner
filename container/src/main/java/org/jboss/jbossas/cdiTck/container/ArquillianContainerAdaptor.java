@@ -1,6 +1,12 @@
 package org.jboss.jbossas.cdiTck.container;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.ServiceLoader;
+import java.util.Set;
+
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.context.ContainerContext;
@@ -17,13 +23,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.testharness.api.DeploymentException;
 import org.jboss.testharness.spi.Containers;
 
-import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashSet;
-import java.util.ServiceLoader;
-import java.util.Set;
-
 
 /**
  * Adaptor between an arquillian {@link DeployableContainer} and test harnesses
@@ -33,22 +32,21 @@ import java.util.Set;
  */
 public class ArquillianContainerAdaptor implements Containers {
     private DeployableContainer<ManagedContainerConfiguration> deployableContainer;
-    private Container container;
-    private ManagedContainerConfiguration configuration;
     private Archive<?> swArchive;
     private org.jboss.arquillian.container.spi.client.container.DeploymentException exception;
-    private Manager manager;
+
+    @SuppressWarnings("unchecked")
     public void setup() throws IOException {
         deployableContainer = loadDeployableContainer();
-        manager = (ManagerBuilder.from()).extension(LoadableExtensionLoader.class).create();
 
+        final Manager manager = ManagerBuilder.from().extension(LoadableExtensionLoader.class).create();
         manager.getContext(ContainerContext.class).activate("AS7 Managed");
 
-        configuration = new ManagedContainerConfiguration();
-
+        final ManagedContainerConfiguration configuration = new ManagedContainerConfiguration();
         configuration.setJavaVmArguments(System.getProperty("jboss.options"));
 
         manager.inject(deployableContainer);
+
         deployableContainer.setup(configuration);
         try {
             deployableContainer.start();
@@ -87,7 +85,11 @@ public class ArquillianContainerAdaptor implements Containers {
     }
 
     public DeploymentException getDeploymentException() {
-        return new DeploymentException(exception.getCause().getClass().getName(), exception.getCause());
+        Throwable cause = exception;
+        while (cause.getCause() != null) {
+            cause = cause.getCause();
+        }
+        return new DeploymentException(cause.getClass().getName(), cause);
     }
 
     public void undeploy(String name) throws IOException {
